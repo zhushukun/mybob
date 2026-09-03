@@ -1,0 +1,39 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main] # push 到 main 时触发
+  workflow_dispatch: # 允许手动触发
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write # Pages 部署需要
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 # 拉代码
+
+      - uses: actions/setup-node@v4 # 安装 Node
+        with:
+          node-version: 22
+
+      - uses: pnpm/action-setup@v4 # 安装 pnpm
+        with:
+          version: 9
+
+      - run: pnpm install --frozen-lockfile # 安装依赖
+
+      - run: pnpm build # 构建，产出 dist/
+
+      - uses: actions/upload-pages-artifact@v3 # 打包 dist/
+        with:
+          path: dist
+
+      - uses: actions/deploy-pages@v4 # 部署到 Pages

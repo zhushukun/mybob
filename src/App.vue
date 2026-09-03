@@ -7,7 +7,7 @@ import { ref } from "vue";
 import axios from "axios";
 
 const imageUrl = ref("");
-axios.get("dev/api/breeds/image/random").then((res) => {
+axios.get("https://dog.ceo/api/breeds/image/random").then((res) => {
   let data = res.data;
   console.log(data);
   imageUrl.value = data.message;
