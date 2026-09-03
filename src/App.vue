@@ -1,5 +1,6 @@
 <template>
-  <h1>Welcome to Your Vue.js App</h1>
+  <h1>github actions deploy</h1>
+  <h1>github pages deploy</h1>
   <img v-if="imageUrl" :src="imageUrl" alt="logo" />
 </template>
 <script setup>
